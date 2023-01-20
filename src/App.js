@@ -8,6 +8,7 @@ function App() {
         <Routes>
           <Route path="/" element={<UsersPage />} />
           <Route path="create-user" element={<UserForm />} />
+          <Route path="edit-user/:id" element={<UserForm />} />
         </Routes>
     </div>
   );

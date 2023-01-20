@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllUsers, searchUsersByString } from "../Api/userService";
+import { deleteUser, getAllUsers } from "../Api/userService";
 import {
   Container,
   Col,
@@ -8,10 +8,12 @@ import {
   Spinner,
   Nav,
   NavItem,
+  FloatingLabel,
+  ToastContainer,
+  Toast,
 } from "react-bootstrap";
 import styled from "styled-components";
 import UsersTable from "./UserTable";
-import BasicNav from "../Components/BasicNav";
 import { Link } from "react-router-dom";
 
 const FormLabel = styled(Form.Label)`
@@ -76,6 +78,7 @@ const UsersPage = () => {
   const [loading, setLoading] = useState(false);
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [showToast, setShowToast] = useState(false);
 
   const getUsers = async () => {
     try {
@@ -94,6 +97,16 @@ const UsersPage = () => {
     getUsers();
   }, []);
 
+  const handleDelete = async (userName) => {
+    setLoading(true);
+    let deleted = await deleteUser(userName);
+    if (deleted.message) {
+      setShowToast(!showToast);
+      setLoading(!loading);
+      getUsers();
+    }
+  };
+
   const searchUsers = (searchValue) => {
     setSearchInput(searchValue);
     if (searchInput !== "") {
@@ -111,17 +124,21 @@ const UsersPage = () => {
     }
   };
 
+  const toggleShow = () => {
+    setShowToast(!showToast);
+    getUsers();
+  };
+
   const UserSearchBar = (
     <Col md={{ span: 3, offset: 9 }}>
       <FormLabel htmlFor="search">User Search</FormLabel>
-      <input
+      <Form.Control
         type="text"
         id="userSearch"
         value={searchInput}
         aria-describedby="userSearch"
         onChange={(e) => searchUsers(e.target.value)}
       />
-      <Form.Text value="sss"></Form.Text>
       <Form.Text id="userSearch" muted>
         Search by any field listed.
       </Form.Text>
@@ -131,18 +148,48 @@ const UsersPage = () => {
   return (
     <Container>
       {CustomNavigator}
-      <CustomRow>
-        <h2>User Management </h2>
-        {loading && <Spinner style={{ marginLeft: "50%" }} animation="grow" />}
-        {UserSearchBar}
-      </CustomRow>
-      <Row>
-        {searchInput.length > 1 ? (
-          <UsersTable users={filteredUsers} />
-        ) : (
-          <UsersTable users={users} />
-        )}
-      </Row>
+      <h2>User Management </h2>
+      {users.length > 0 && (
+        <CustomRow>
+          {loading && (
+            <Spinner style={{ marginLeft: "50%" }} animation="grow" />
+          )}
+          {UserSearchBar}
+        </CustomRow>
+      )}
+      {users.length > 0 ? (
+        <Row>
+          {searchInput.length > 1 ? (
+            <UsersTable users={filteredUsers} deleteMethod={handleDelete} />
+          ) : (
+            <UsersTable users={users} deleteMethod={handleDelete} />
+          )}
+        </Row>
+      ) : (
+        <Row>
+          <FloatingLabel>
+            There's no user in our database - Want to add one?
+          </FloatingLabel>
+          <CustomLink href={links[1].href} to={links[1].href}>
+            {links[1].label}
+          </CustomLink>
+        </Row>
+      )}
+      {showToast && (
+        <ToastContainer position="top-center">
+          <Toast show={showToast} onClose={toggleShow} delay={3000} autohide>
+            <Toast.Header>
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto">User deleted</strong>
+            </Toast.Header>
+            <Toast.Body>You've deleted the User!</Toast.Body>
+          </Toast>
+        </ToastContainer>
+      )}
     </Container>
   );
 };

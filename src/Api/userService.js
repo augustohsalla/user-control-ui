@@ -30,8 +30,6 @@ export const searchUsersByString = async (field) => {
   }
 };
 
-export const getUserByUsername = async () => {};
-
 export const postUser = async (user) => {
   try {
     const response = await fetch(`${variables.API_URL}/User`, {
@@ -50,6 +48,37 @@ export const postUser = async (user) => {
   }
 };
 
-export const editUser = async (user) => {};
+export const editUser = async (user) => {
+  try {
+    const response = await fetch(`${variables.API_URL}/User/${user.userName}`, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify(user),
+    });
+    if (!response.ok) {
+      throw new Error(
+        `This is an HTTP error: The status is ${response.status}`
+      );
+    }
+    return await response.json();
+  } catch (err) {
+    throw new Error(err);
+  }
+};
 
-export const deleteUser = async (user) => {};
+export const deleteUser = async (userName) => {
+  try {
+    const response = await fetch(`${variables.API_URL}/User/${userName}`, {
+      method: "DELETE",
+      headers
+    });
+    if (!response.ok) {
+      throw new Error(
+        `This is an HTTP error: The status is ${response.status}`
+      );
+    }
+    return await response.json();
+  } catch (err) {
+    throw new Error(err);
+  }
+};

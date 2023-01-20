@@ -7,11 +7,12 @@ import {
   Toast,
   ToastContainer,
 } from "react-bootstrap";
-import { Navigate } from "react-router-dom";
-import { postUser } from "../Api/userService";
+import { useLocation } from "react-router-dom";
+import { editUser, postUser } from "../Api/userService";
 import { CustomNavigator } from "./UsersPage";
 
 const UserForm = () => {
+  const { state } = useLocation();
   const [user, setUser] = useState({
     username: "",
     name: "",
@@ -19,11 +20,16 @@ const UserForm = () => {
     userwebsite: "",
   });
   const [loading, setLoading] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
-  const [showA, setShowA] = useState(true);
+  const [showToast, setShowToast] = useState(false);
   const [seconds, setSeconds] = useState(1);
 
   useEffect(() => {
+    if (state && state.id) {
+      setEditMode(true);
+      setUser(state);
+    }
     const interval = setInterval(() => {
       setSeconds((seconds) => seconds + 1);
     }, 1000);
@@ -34,7 +40,8 @@ const UserForm = () => {
   }, []);
 
   const toggleShowA = () => {
-    setShowA(!showA);
+    setShowToast(!showToast);
+    window.location.replace("/");
   };
 
   const handleChange = (event) => {
@@ -45,14 +52,16 @@ const UserForm = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      await postUser(user);
+      if (state && state.id) {
+        await editUser(user);
+      } else {
+        await postUser(user);
+      }
       setLoading(false);
-      toggleShowA(showA);
+      toggleShowA(showToast);
+      setUser({ name: "", username: "", email: "", userwebsite: "" });
     } catch (e) {
       throw new Error(e);
-    } finally {
-      setUser({ name: "", username: "", email: "", userwebsite: "" });
-      window.location.replace("/");
     }
   };
 
@@ -80,6 +89,7 @@ const UserForm = () => {
             <Form.Control
               type="text"
               name="username"
+              disabled={editMode}
               value={user.username}
               onChange={handleChange}
               className="form-control"
@@ -92,6 +102,7 @@ const UserForm = () => {
             <InputGroup>
               <Form.Control
                 type="text"
+                disabled={editMode}
                 name="email"
                 value={user.email}
                 onChange={handleChange}
@@ -131,9 +142,9 @@ const UserForm = () => {
           </Form.Group>
         </Row>
       </form>
-      {showA && (
+      {showToast && (
         <ToastContainer position="top-center">
-          <Toast show={showA} onClose={toggleShowA} delay={3000} autohide>
+          <Toast show={showToast} onClose={toggleShowA} delay={3000} autohide>
             <Toast.Header>
               <img
                 src="holder.js/20x20?text=%20"

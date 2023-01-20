@@ -1,5 +1,5 @@
 export const variables = {
-  API_URL: "https://localhost:7146",
+  API_URL: process.env.PROXY_API || "https://localhost:7146",
 };
 
 export const headers = {
