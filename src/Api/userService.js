@@ -1,6 +1,7 @@
-import { variables, headers } from "./../variables";
+import { variables, headers } from "../variables";
 
 export const getAllUsers = async () => {
+  console.log(process.env);
   try {
     const response = await fetch(`${variables.API_URL}/User`, { headers });
     if (!response.ok) {

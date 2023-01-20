@@ -149,7 +149,7 @@ const UsersPage = () => {
     <Container>
       {CustomNavigator}
       <h2>User Management </h2>
-      {users.length > 0 && (
+      {users && users.length > 0 && (
         <CustomRow>
           {loading && (
             <Spinner style={{ marginLeft: "50%" }} animation="grow" />
@@ -157,7 +157,7 @@ const UsersPage = () => {
           {UserSearchBar}
         </CustomRow>
       )}
-      {users.length > 0 ? (
+      {users && users.length > 0 ? (
         <Row>
           {searchInput.length > 1 ? (
             <UsersTable users={filteredUsers} deleteMethod={handleDelete} />
