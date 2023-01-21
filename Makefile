@@ -1,13 +1,14 @@
-.PHONY: build app clean stop 
+.PHONY: build app api clean stop 
 		
 build:	
 	@docker-compose build
+	@yarn install
 
-app: build 
-	@docker-compose up -d user-web-ui
-
-api: app
+api: build
 	@docker-compose up -d user-web-api
+
+app: api 
+	@yarn start
 
 clean:
 	@docker-compose down
