@@ -1,10 +1,6 @@
 
 # User Control Assessment
-
-This project was developed using .net Core to create it API and react on the front-end.
-
 User story 
-
 As an anonymous user I want to manage a set of users in a table. In addition I want to be able to have an input field which filters the list of users for matching criteria e.g. enter the name of a user “Franz” or “Fra” into the input field and the list updates to reflect only the matching users with name “Franz”.
 
 ## Acceptance criteria
@@ -15,17 +11,23 @@ As an anonymous user I want to manage a set of users in a table. In addition I w
  -  React on front end - web api developed using .net core.
  -  create-react-app 
 
+## How to run?
+First, clone this repo.
+Install Make File 
+```bash
+brew install make
+```
+Installed brew, on the project root, run:
+```bash
+make app
+```
+It will install all the dependencies from the backend and frontend and then run them properly. 
 
-![sketch](https://user-images.githubusercontent.com/9836608/213828674-5597ada4-8e18-4a4b-a2b7-1fb1a94d6896.png)
 
-
-## Links 
+## Links
 [React Bootstrap](https://react-bootstrap.github.io/)
-
 [Create React App](https://github.com/facebook/create-react-app)
-
 [React Router Dom](https://reactrouter.com/en/main)
-
 [Styled Components](https://styled-components.com/)
-
 [Docker](https://www.docker.com/)
+[Make File](https://formulae.brew.sh/formula/make)
