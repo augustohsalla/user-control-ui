@@ -2,20 +2,12 @@
 using System.Reflection.Metadata;
 using EFCoreInMemoryDbDemo;
 using Microsoft.EntityFrameworkCore;
+using user_api_new.Services;
 
-namespace userWebApi.Services
+namespace user_api_new.Services
 {
-    public interface IUserService
-    {
-        IEnumerable<User> GetAllUsers();
-        IEnumerable<User> SearchUsers(string Username);
-        User GetByUsername(string Username);
-        void Create(User user);
-        void Update(User user);
-        void Delete(string Username);
-    }
-
-    public class UserService : IUserService
+    
+    public class UserService : IUserInterface
     {
         private ApiContext _context;
 

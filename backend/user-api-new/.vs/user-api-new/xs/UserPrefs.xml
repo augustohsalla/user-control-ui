@@ -1,0 +1,26 @@
+﻿<Properties StartupConfiguration="{F9873177-EA86-4231-B4F6-F2CFE502AEC9}|Default">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.user-api-new PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.docker-compose PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="user-api-new.csproj">
+    <Files>
+      <File FileName="Dockerfile" Line="1" Column="1" />
+      <File FileName="user-api-new.csproj" Line="11" Column="1" />
+      <File FileName="Program.cs" Line="5" Column="39" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="user-api-new" expanded="True">
+            <Node name="user-api-new" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

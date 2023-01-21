@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  user-api-new:
+    image: ${DOCKER_REGISTRY-}userapinew
+    build:
+      context: .
+      dockerfile: ./Dockerfile

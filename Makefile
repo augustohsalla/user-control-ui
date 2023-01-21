@@ -5,7 +5,7 @@ build:
 	@yarn install
 
 api: build
-	@docker-compose up -d user-web-api
+	@docker-compose up -d user-api-new
 
 app: api 
 	@yarn start

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using userWebApi.Services;
+using user_api_new.Services;
 
 namespace userWebApi.Controllers
 {
@@ -11,9 +11,9 @@ namespace userWebApi.Controllers
     [Route("user")]
     public class UserController : ControllerBase
     {
-        private IUserService _userService;
+        private IUserInterface _userService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserInterface userService)
         {
             _userService = userService;
         }

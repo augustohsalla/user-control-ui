@@ -1,5 +1,5 @@
 export const variables = {
-  API_URL: "https://localhost:27017",
+  API_URL: "https://localhost:7146",
 };
 
 export const headers = {

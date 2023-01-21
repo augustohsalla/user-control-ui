@@ -5,8 +5,6 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-EXPOSE 80
-
 ENV NUXT_HOST=0.0.0.0
 ENV NUXT_PORT=$PORT
 

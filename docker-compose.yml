@@ -1,16 +1,20 @@
 version: '3.4'
+
 services:
 
-  user-web-api:
-    image: ${DOCKER_REGISTRY-}userwebapi
-    container_name: user-web-api
+  user-api-new:
+    image: ${DOCKER_REGISTRY-}ser-api-new
+    container_name: user-api-new
     build:
       context: .
-      dockerfile: ./backend/Dockerfile
+      dockerfile: ./backend/user-api-new/Dockerfile
+    ports:
+      - "1234:80"
 
   user-web-ui:
-    image: ${DOCKER_REGISTRY-}usercontrolui
+    image: ${DOCKER_REGISTRY-}user-web-ui
     container_name: user-web-ui
     build:
       context: .
       dockerfile: ./Dockerfile
+
