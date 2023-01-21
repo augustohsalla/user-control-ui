@@ -17,7 +17,11 @@ As an anonymous user I want to manage a set of users in a table. In addition I w
 
 ## Links 
 [React Bootstrap](https://react-bootstrap.github.io/)
+
 [Create React App](https://github.com/facebook/create-react-app)
+
 [React Router Dom](https://reactrouter.com/en/main)
+
 [Styled Components](https://styled-components.com/)
+
 [Docker](https://www.docker.com/)
