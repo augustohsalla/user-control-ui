@@ -1,6 +1,10 @@
 
 # User Control Assessment
+
+This project was developed using .net Core to create it API and react on the front-end.
+
 User story 
+
 As an anonymous user I want to manage a set of users in a table. In addition I want to be able to have an input field which filters the list of users for matching criteria e.g. enter the name of a user “Franz” or “Fra” into the input field and the list updates to reflect only the matching users with name “Franz”.
 
 ## Acceptance criteria
