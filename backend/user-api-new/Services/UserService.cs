@@ -17,6 +17,11 @@ namespace user_api_new.Services
             _context = context;
         }
 
+        public User GetByUsername(string username)
+        {
+            return getUser(username);
+        }
+
         private User getUser(string userName)
         {
             var user = _context.Users.ToList().Find(u => u.Username.Equals(userName));
@@ -29,17 +34,15 @@ namespace user_api_new.Services
             return _context.Users;
         }
 
-        public IEnumerable<User> SearchUsers(string field)
+        public async Task<IEnumerable<User>> SearchUsers(string field)
         {
             field = field.ToLower();
-            var users = _context.Users.Where(user => user.Username.ToLower().Contains(field) && user.Name.ToLower().Contains(field) && user.Email.ToLower().Contains(field) );
+            var users = await _context.Users.AsQueryable().Where
+                (user => user.Username.ToLower().Contains(field)
+                || user.Name.ToLower().Contains(field)
+                || user.Email.ToLower().Contains(field) ).ToListAsync();
 
             return users;
-        }
-
-        public User GetByUsername(string username)
-        {
-            return getUser(username);
         }
 
         public void Create(User user)

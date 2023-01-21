@@ -27,11 +27,10 @@ namespace userWebApi.Controllers
         }
 
         [EnableCors]
-        [HttpGet("search/{field}")]
-        [SwaggerOperation(Tags = new[] { "Search Users" })]
-        public IActionResult SearchUsers(string field)
+        [HttpPost("search")]
+        public async Task<IActionResult> SearchUsers([FromBody] string field)
         {   
-            var users = _userService.SearchUsers(field);
+            var users = await _userService.SearchUsers(field);
             return Ok(users);   
         }
 

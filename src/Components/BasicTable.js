@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Row, Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import BasicModal from "./Modal";
 
@@ -11,6 +11,7 @@ const ActionLink = styled(Link)`
 
 const BasicTable = ({ header, data, deleteMethod }) => {
   const headerProps = header.map((h) => h.toLocaleLowerCase());
+  const navigate = useNavigate();
 
   const [openModal, setOpenModal] = useState(false);
   const handleDelete = (data) => {
@@ -20,12 +21,17 @@ const BasicTable = ({ header, data, deleteMethod }) => {
     return (
       data &&
       data.map((data, index) => (
-        <tr key={index}>
+        <tr
+          key={index}
+          onDoubleClick={() => {
+            navigate(`/edit-user/${data.username}`, { state: data });
+          }}
+        >
           {headerProps &&
             headerProps.map((headerTitle, hIndex) => {
               const showActions = headerTitle.toLocaleLowerCase() === "actions";
               return showActions ? (
-                <td>
+                <td key={hIndex}>
                   <ActionLink
                     href={`/edit-user/${data.username}`}
                     to={`/edit-user/${data.username}`}
@@ -33,6 +39,7 @@ const BasicTable = ({ header, data, deleteMethod }) => {
                   >
                     ✏️
                   </ActionLink>
+
                   <ActionLink onClick={() => handleDelete(data.username)}>
                     ❌
                   </ActionLink>

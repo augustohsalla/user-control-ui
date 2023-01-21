@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { deleteUser, getAllUsers } from "../Api/userService";
+import {
+  deleteUser,
+  getAllUsers,
+  searchUsersByString,
+} from "../Api/userService";
 import {
   Container,
   Col,
@@ -107,17 +111,13 @@ const UsersPage = () => {
     }
   };
 
-  const searchUsers = (searchValue) => {
+  const searchUsers = async (searchValue) => {
     setSearchInput(searchValue);
+
     if (searchInput !== "") {
       setSearchLoading(true);
-      const filteredData = users.filter((item) => {
-        return Object.values(item)
-          .join("")
-          .toLowerCase()
-          .includes(searchInput.toLowerCase());
-      });
-      setFilteredUsers(filteredData);
+      const userSearch = await searchUsersByString(searchValue);
+      setFilteredUsers(userSearch);
     } else {
       setFilteredUsers(users);
       setSearchLoading(false);
@@ -163,7 +163,7 @@ const UsersPage = () => {
             <UsersTable users={filteredUsers} deleteMethod={handleDelete} />
           ) : (
             <UsersTable users={users} deleteMethod={handleDelete} />
-          )}
+          )}  
         </Row>
       ) : (
         <Row>
