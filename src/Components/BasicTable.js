@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
-import { Col, Row, Table } from "react-bootstrap";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Table } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import BasicModal from "./Modal";
 
 const ActionLink = styled(Link)`
   text-decoration: none;
@@ -13,10 +11,10 @@ const BasicTable = ({ header, data, deleteMethod }) => {
   const headerProps = header.map((h) => h.toLocaleLowerCase());
   const navigate = useNavigate();
 
-  const [openModal, setOpenModal] = useState(false);
-  const handleDelete = (data) => {
-    deleteMethod(data);
+  const handleDelete = (username) => {
+    deleteMethod(username);
   };
+
   const renderLine = () => {
     return (
       data &&
@@ -45,16 +43,13 @@ const BasicTable = ({ header, data, deleteMethod }) => {
                   </ActionLink>
                 </td>
               ) : (
-                <td key={hIndex} onClick={() => setOpenModal(true)}>
-                  {data[headerTitle]}
-                </td>
+                <td key={hIndex}>{data[headerTitle]}</td>
               );
             })}
         </tr>
       ))
     );
   };
-
   return (
     <Table striped bordered hover variant="dark">
       <thead>

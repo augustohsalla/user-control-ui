@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import {
+  Button,
   Container,
+  FloatingLabel,
   Form,
   InputGroup,
   Row,
@@ -8,6 +10,7 @@ import {
   ToastContainer,
 } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
+import styled from "styled-components";
 import { editUser, postUser } from "../Api/userService";
 import { CustomNavigator } from "./UsersPage";
 
@@ -72,10 +75,11 @@ const UserForm = () => {
   return (
     <Container>
       {CustomNavigator}
-      <form className="container mt-3 mb-3">
-        <Row className="mb-3">
-          <Form.Group controlId="formName" className="col col-sm-6">
-            <Form.Label> Name</Form.Label>
+      <FloatingLabel> Create User </FloatingLabel>
+      <form>
+        <Row className="align-items-center mt-3 mb-3 mr-10 ml-10">
+          <Form.Group controlId="formName" className="col col-sm-4">
+            <Form.Label>Name</Form.Label>
             <Form.Control
               type="name"
               name="name"
@@ -84,7 +88,9 @@ const UserForm = () => {
               className="form-control"
             />
           </Form.Group>
-          <Form.Group controlId="formUsername" className="col col-sm-6">
+        </Row>
+        <Row className="align-items-center mt-3 mb-3 mr-10 ml-10">
+          <Form.Group controlId="formUsername" className="col col-sm-4">
             <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
@@ -96,8 +102,9 @@ const UserForm = () => {
             />
           </Form.Group>
         </Row>
-        <Row className="mb-3">
-          <Form.Group controlId="formEmail" className="col col-sm-6">
+
+        <Row className="align-items-center mt-3 mb-3 mr-10 ml-10">
+          <Form.Group controlId="formEmail" className="col col-sm-4">
             <Form.Label>Email</Form.Label>
             <InputGroup>
               <Form.Control
@@ -110,8 +117,9 @@ const UserForm = () => {
               <InputGroup.Text id="basic-addon2">@gmail.com</InputGroup.Text>
             </InputGroup>
           </Form.Group>
-
-          <Form.Group controlId="formWebsite" className="col col-sm-6">
+        </Row>
+        <Row className="align-items-center mt-3 mb-3 mr-10 ml-10">
+          <Form.Group controlId="formWebsite" className="col col-sm-4">
             <Form.Label>Website</Form.Label>
             <Form.Control
               type="text"
@@ -124,24 +132,27 @@ const UserForm = () => {
         </Row>
 
         <Row>
-          <Form.Group className="col col-sm-6">
-            <button
+          <Form.Group className="col col-sm-4 mt-4 mb-4">
+            <Button
               type="submit"
               onClick={submitButton}
+              size="lg"
               className="me-4 btn btn-success btn-lg btn-block"
             >
               Create
-            </button>
-            <button
+            </Button>
+            <Button
               type="reset"
               onClick={resetButton}
+              size="lg"
               className="me-4 btn btn-danger btn-lg btn-block"
             >
               Reset
-            </button>
+            </Button>
           </Form.Group>
         </Row>
       </form>
+
       {showToast && (
         <ToastContainer position="top-center">
           <Toast show={showToast} onClose={toggleShowA} delay={3000} autohide>

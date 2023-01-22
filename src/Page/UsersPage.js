@@ -13,8 +13,8 @@ import {
   Nav,
   NavItem,
   FloatingLabel,
-  ToastContainer,
-  Toast,
+  Modal,
+  Button,
 } from "react-bootstrap";
 import styled from "styled-components";
 import UsersTable from "./UserTable";
@@ -41,6 +41,7 @@ const CustomLink = styled(Link)`
     text-decoration: underline;
   }
 `;
+
 const CustomItem = styled(NavItem)`
   border-radius: 10%;
   margin-right: 10px;
@@ -60,6 +61,7 @@ const links = [
     label: "Add User",
   },
 ];
+
 export const CustomNavigator = (
   <CustomNav activeKey={links[0].href}>
     {links.map((link, index) => {
@@ -83,6 +85,37 @@ const UsersPage = () => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [deleteResponse, setDeleteResponse] = useState(" ");
+  const [deleteDialog, setShowDeleteDialog] = useState({
+    show: false,
+    username: "",
+  });
+
+  const handleConfirmDeleteModal = (username) => {
+    setShowDeleteDialog({
+      show: { deleteDialog: !deleteDialog },
+      username: username ? username : "",
+    });
+  };
+
+  const RenderConfirmDeleteModal = (username) => {
+    return (
+      <Modal show={deleteDialog.show} onHide={handleConfirmDeleteModal}>
+        <Modal.Header closeButton className="alert alert-danger">
+          <Modal.Title>Delete Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this user?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="default" onClick={handleConfirmDeleteModal}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={() => handleDelete(username)}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
 
   const getUsers = async () => {
     try {
@@ -102,18 +135,11 @@ const UsersPage = () => {
   }, []);
 
   const handleDelete = async (userName) => {
-    setLoading(true);
     let deleted = await deleteUser(userName);
-    if (deleted.message) {
-      setShowToast(!showToast);
-      setLoading(!loading);
-      getUsers();
-    }
   };
 
   const searchUsers = async (searchValue) => {
     setSearchInput(searchValue);
-
     if (searchInput !== "") {
       setSearchLoading(true);
       const userSearch = await searchUsersByString(searchValue);
@@ -122,11 +148,6 @@ const UsersPage = () => {
       setFilteredUsers(users);
       setSearchLoading(false);
     }
-  };
-
-  const toggleShow = () => {
-    setShowToast(!showToast);
-    getUsers();
   };
 
   const UserSearchBar = (
@@ -160,10 +181,13 @@ const UsersPage = () => {
       {users && users.length > 0 ? (
         <Row>
           {searchInput.length > 1 ? (
-            <UsersTable users={filteredUsers} deleteMethod={handleDelete} />
+            <UsersTable
+              users={filteredUsers}
+              deleteMethod={handleConfirmDeleteModal}
+            />
           ) : (
-            <UsersTable users={users} deleteMethod={handleDelete} />
-          )}  
+            <UsersTable users={users} deleteMethod={handleConfirmDeleteModal} />
+          )}
         </Row>
       ) : (
         <Row>
@@ -175,21 +199,10 @@ const UsersPage = () => {
           </CustomLink>
         </Row>
       )}
-      {showToast && (
-        <ToastContainer position="top-center">
-          <Toast show={showToast} onClose={toggleShow} delay={3000} autohide>
-            <Toast.Header>
-              <img
-                src="holder.js/20x20?text=%20"
-                className="rounded me-2"
-                alt=""
-              />
-              <strong className="me-auto">User deleted</strong>
-            </Toast.Header>
-            <Toast.Body>You've deleted the User!</Toast.Body>
-          </Toast>
-        </ToastContainer>
-      )}
+
+      {deleteDialog &&
+        deleteDialog.show &&
+        RenderConfirmDeleteModal(deleteDialog.username)}
     </Container>
   );
 };
