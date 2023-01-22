@@ -26,8 +26,13 @@ It will install all the dependencies from the backend and frontend and then run 
 
 ## Links
 [React Bootstrap](https://react-bootstrap.github.io/)
+
 [Create React App](https://github.com/facebook/create-react-app)
+
 [React Router Dom](https://reactrouter.com/en/main)
+
 [Styled Components](https://styled-components.com/)
+
 [Docker](https://www.docker.com/)
+
 [Make File](https://formulae.brew.sh/formula/make)
